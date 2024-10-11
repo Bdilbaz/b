@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt Abteilung - Digital Development</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Kopfzeile - Nur die Kopfzeile soll farblich hinterlegt sein */
+        .header {
+            text-align: center;
+            background-color: #299e8e; /* Farbliche Hinterlegung der Kopfzeile */
+            padding: 20px;
+            color: white;
+            border-radius: 8px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            margin-top: 5px;
+            font-size: 2em;
+        }
+
+        /* Container für den Inhalt */
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: auto;
+            max-width: 800px;
+        }
+
+        p {
+            line-height: 1.6;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        /* Die Sektionen in der Kopfzeile */
+        .section-header {
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .section-header div {
+            font-size: 1.1em; /* Die Schriftgröße der Oberbegriffe */
+            color: black;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            flex-grow: 1;
+            text-align: center;
+            background-color: white;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .section-header div:hover {
+            background-color: #299e8e; /* Blau auf Hover */
+            color: white;
+            transform: scale(1.05); /* Leichtes Zoom bei Hover */
+        }
+        .section-header div.active {
+            background-color: #299e8e; /* Aktivierte Sektion bleibt blau */
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Dropdown-Menü mit Drillthrough-Schaltfläche */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            z-index: 1;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 0.9em; /* Kleinere Schriftgröße */
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: #299e8e;
+            color: white;
+            transform: scale(1.02); /* Leichtes Zoom bei Hover */
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover .dropbtn {
+            background-color: #299e8e;
+        }
+
+        /* Drillthrough-Schaltflächen */
+        .drillthrough-button {
+            display: block;
+            background-color: #299e8e; /* Blau */
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+            margin: 20px auto;
+            width: fit-content;
+        }
+        .drillthrough-button:hover {
+            background-color: #86bb22; /* Grün */
+            transform: scale(1.05); /* Leichtes Zoom bei Hover */
+        }
+
+        /* Responsives Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Projekt Abteilung</h1>
+    <h2>Financial</h2>
+</div>
+
+<!-- Neue Kopfzeile mit vier Oberbegriffen -->
+<div class="section-header">
+    <div class="dropdown">
+        <span class="dropbtn">People & Culture</span>
+        <div class="dropdown-content">
+            <a href="#" onclick="showContent('people-culture')">Details anzeigen</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <span class="dropbtn">Contract Management</span>
+        <div class="dropdown-content">
+            <a href="#" onclick="showContent('contract-management')">Details anzeigen</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <span class="dropbtn">Finance</span>
+        <div class="dropdown-content">
+            <a href="#" onclick="showContent('finance')">Details anzeigen</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <span class="dropbtn">Apprenticeship (Commercial)</span>
+        <div class="dropdown-content">
+            <a href="#" onclick="showContent('apprenticeship')">Details anzeigen</a>
+        </div>
+    </div>
+</div>
+
+<!-- Abteilungen unterhalb der Oberbegriffe -->
+<div class="container">
+    <div id="content-area">
+        <!-- Die Inhalte werden hier dynamisch geladen -->
+    </div>
+</div>
+
+<!-- Drillthrough-Schaltfläche am Ende -->
+<a href="#" class="drillthrough-button">Mehr über das Team erfahren</a>
+
+<script>
+    function showContent(section) {
+        let contentArea = document.getElementById('content-area');
+        if (section === 'people-culture') {
+            contentArea.innerHTML = `
+                <h2>People & Culture</h2>
+                <p>Die Abteilung "People and Culture" stellt das zentrale Element unserer Personalstrategie dar. Ihr Aufgabenbereich umfasst den gesamten Bewerbungsprozess, von der Personalbeschaffung und dem Active Sourcing über die Sichtung eingehender Bewerbungen bis hin zur Durchführung von Vorstellungsgesprächen. Ein weiterer Schwerpunkt liegt auf dem Personalmarketing, der Gestaltung von Stellenanzeigen sowie der Organisation von Programmen wie dem Buddy-Programm. Das Team ist zudem für die kontinuierliche Personalentwicklung, das Benefit-Management und das Weiterbildungsmanagement zuständig. Auch die Betreuung des Chatbots, die Beantwortung von Bewerberanfragen sowie die Eventplanung in Zusammenarbeit mit dem Marketing gehören zu ihren vielfältigen Aufgaben. Das Ziel ist die Schaffung und langfristige Förderung eines positiven Arbeitsumfelds.</p>
+            `;
+        } else if (section === 'contract-management') {
+            contentArea.innerHTML = `
+                <h2>Contract Management</h2>
+                <p>Die Abteilung Contract Management ist die zentrale Abteilung für die Eingabe von Neuverträgen in das Warenwirtschaftssystem. Ihre Aufgaben umfassen die Vertragsabrechnung, die Bearbeitung von Reklamationen sowie die Bearbeitung von Kundenanliegen und Kundenanfragen im Zusammenhang mit vertraglichen Angelegenheiten. Darüber hinaus ist sie für die Pflege von Stellplatzdaten und die Erfassung der aktuellen Zählerstände von Maschinen zuständig.</p>
+            `;
+        } else if (section === 'finance') {
+            contentArea.innerHTML = `
+                <h2>Finance</h2>
+                <p>Die Abteilung "Finance" ist für die Abwicklung und Überwachung des Zahlungsverkehrs zuständig und steht hierzu in engem Austausch mit den Banken. Des Weiteren werden Kostenrechnungen und Dauermietabrechnungen gebucht, das Mahnwesen sowie das Forderungsmanagement übernommen. Des Weiteren ist sie für die Kontenabstimmung, -klärung und -pflege sowie die Stammdatenpflege und die Kostenstellenrechnung zuständig. Sie unterstützt bei der Erstellung von Monats-, Quartals- und Jahresabschlüssen und arbeitet eng mit Steuerberatern und Wirtschaftsprüfern zusammen. Zu den Unternehmen, für die die Abteilung Finance tätig ist, zählen unter anderem die DoSystems GmbH, die Kesper GmbH und die GREEN IT retail & software solutions GmbH.</p>
+            `;
+        } else if (section === 'apprenticeship') {
+            contentArea.innerHTML = `
+                <h2>Apprenticeship (Commercial)</h2>
+                <p>Die Abteilung "Apprenticeship (Commercial)" bietet eine umfassende Ausbildung in verschiedenen kaufmännischen Bereichen. Die Auszubildenden unterstützen und arbeiten aktiv in den Abteilungen mit, in denen sie eingesetzt sind. Zu den Aufgaben gehört die Dokumentation sowie die Bearbeitung von Aufträgen im Warenwirtschaftssystem Evatic oder im Ticketsystem PSA. Des Weiteren übernehmen sie kaufmännische Tätigkeiten wie die Auftragsbearbeitung, Kundenbetreuung sowie die Rechnungs- und Angebotsbearbeitung.</p>
+            `;
+        } else {
+            contentArea.innerHTML = `<p>Inhalte für diesen Bereich sind momentan nicht verfügbar.</p>`;
+        }
+    }
+</script>
+
+</body>
+</html>
